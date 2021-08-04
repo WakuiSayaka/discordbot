@@ -54,7 +54,7 @@ async def on_message(message):
     if client.user in message.mentions:
         await reply(message) # 返信する非同期関数を実行
     # 特定のチャンネルにのみ反応
-    if message.channel.id != 872481513504124970:
+    if message.channel.id != CHANNEL_ID:
         return
     # 「/neko」と発言したら「にゃーん」が返る処理
     if message.content == '/neko':
