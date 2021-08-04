@@ -50,26 +50,29 @@ async def on_message(message):
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
         return
-    # 「/neko」と発言したら「にゃーん」が返る処理
-    if message.content == '/neko':
-        await message.channel.send('にゃーん')
-    # 管理者のみ「/clear」と発言したらテキストチャンネル内のログの全削除
-    if message.content == '/clear':
-        if message.author.guild_permissions.administrator:
-            await message.channel.purge()
-            await message.channel.send('お掃除終わりました！')
-        else:
-            await message.channel.send('悪い事しちゃダメです！')
-    # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
-    if "!stop" in message.content:
-        if "Bot管理者" in [users_role.name for users_role in message.author.roles]:
-            await message.channel.send("ばいばーい！")
-            await client.close()
-        else:
-            await message.channel.send("管理者専用コマンドだよ！")
     # 話しかけられたかの判定
     if client.user in message.mentions:
         await reply(message) # 返信する非同期関数を実行
+    # 特定のチャンネルに反応
+    if msg.channel.name == 'tsumugiちゃんの部屋':
+        # 「/neko」と発言したら「にゃーん」が返る処理
+        if message.content == '/neko':
+            await message.channel.send('にゃーん')
+        # 管理者のみ「/clear」と発言したらテキストチャンネル内のログの全削除
+        if message.content == '/clear':
+            if message.author.guild_permissions.administrator:
+                await message.channel.purge()
+                await message.channel.send('お掃除終わりました！')
+            else:
+                await message.channel.send('悪い事しちゃダメです！')
+        # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
+        if "!stop" in message.content:
+            if "Bot管理者" in [users_role.name for users_role in message.author.roles]:
+                await message.channel.send("ばいばーい！")
+                await client.close()
+            else:
+                await message.channel.send("管理者専用コマンドだよ！")
+
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
