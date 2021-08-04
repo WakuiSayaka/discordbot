@@ -12,8 +12,8 @@ TOKEN = os.environ['DISCORDBOT_TOKEN_ID']
 client = discord.Client()
 
 
-# 一般チャンネルのID
-CHANNEL_ID = 872192669965754451
+# 反応するチャンネルのID
+CHANNEL_ID = 872481513504124970
 
 async def greet():
     channel = client.get_channel(CHANNEL_ID)
@@ -54,7 +54,7 @@ async def on_message(message):
     if client.user in message.mentions:
         await reply(message) # 返信する非同期関数を実行
     # 特定のチャンネルに反応
-    if msg.channel.name == 'tsumugiちゃんの部屋':
+    if msg.channel.id == 872481513504124970:
         # 「/neko」と発言したら「にゃーん」が返る処理
         if message.content == '/neko':
             await message.channel.send('にゃーん')
