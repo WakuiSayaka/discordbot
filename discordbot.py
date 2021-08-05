@@ -70,15 +70,6 @@ async def on_message(message):
         else:
             await message.channel.send('悪い事しちゃダメです！')
 
-    # チャンネルの作成「/mkch」
-    if message.content.startswith('/mkch'):
-        # チャンネルを作成する非同期関数を実行して Channel オブジェクトを取得
-        new_channel = await create_channel(message, channel_name='new')
-
-        # チャンネルのリンクと作成メッセージを送信
-        text = f'{new_channel.mention} を作成しました'
-        await message.channel.send(text)
-
     # --------------以下、特定のチャンネルにのみ反応---------------------
     # 複数指定する場合は
     # if message.channel.id not in [チャンネルID, チャンネルID2]:
@@ -97,6 +88,14 @@ async def on_message(message):
         else:
             await message.channel.send("管理者専用コマンドだよ！")
 
+    # チャンネルの作成「/mkch」
+    if message.content.startswith('/mkch'):
+        # チャンネルを作成する非同期関数を実行して Channel オブジェクトを取得
+        new_channel = await create_channel(message, channel_name='new')
+
+        # チャンネルのリンクと作成メッセージを送信
+        text = f'{new_channel.mention} を作成しました'
+        await message.channel.send(text)
 
 
 # Botの起動とDiscordサーバーへの接続
