@@ -88,14 +88,19 @@ async def on_message(message):
         else:
             await message.channel.send("管理者専用コマンドだよ！")
 
-    # チャンネルの作成「/mkch」
+    # チャンネルの作成「/mkch」 (startswith... /mkchから始まる文字列に反応)
     if message.content.startswith('/mkch'):
+        channel_name = 'new'
+        if (len('/mkch')+1) < len(message.content):
+            channel_name = message.content[len('/mkch')+1:]
         # チャンネルを作成する非同期関数を実行して Channel オブジェクトを取得
-        new_channel = await create_channel(message, channel_name='new')
+        new_channel = await create_channel(message, channel_name)
 
         # チャンネルのリンクと作成メッセージを送信
         text = f'{new_channel.mention} を作成しました'
         await message.channel.send(text)
+
+
 
 
 # Botの起動とDiscordサーバーへの接続
