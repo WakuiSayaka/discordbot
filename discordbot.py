@@ -43,6 +43,13 @@ async def reply(message):
         reply = f'{message.author.mention} {extract_reply(message.clean_content)}\nってにゃに？' # 返信メッセージの作成
     await message.channel.send(reply) # 返信メッセージを送信
 
+# 発言したチャンネルのカテゴリ内にチャンネルを作成する非同期関数
+async def create_channel(message, channel_name):
+    category_id = message.channel.category_id
+    category = message.guild.get_channel(category_id)
+    new_channel = await category.create_text_channel(name=channel_name)
+    return new_channel
+
 
 # メッセージ受信時に動作する処理
 @client.event
@@ -62,6 +69,15 @@ async def on_message(message):
             await message.channel.send('お掃除終わりました！')
         else:
             await message.channel.send('悪い事しちゃダメです！')
+
+    # チャンネルの作成「/mkch」
+    if message.content.startswith('/mkch'):
+        # チャンネルを作成する非同期関数を実行して Channel オブジェクトを取得
+        new_channel = await create_channel(message, channel_name='new')
+
+        # チャンネルのリンクと作成メッセージを送信
+        text = f'{new_channel.mention} を作成しました'
+        await message.channel.send(text)
 
     # --------------以下、特定のチャンネルにのみ反応---------------------
     # 複数指定する場合は
