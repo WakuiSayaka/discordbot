@@ -98,9 +98,11 @@ async def on_message(message):
         try:
             reaction, user = await client.wait_for('reaction_add', timeout=20.0, check=check)
         except asyncio.TimeoutError:
-            await channel.send('👎')
         else:
             await channel.send('👍')
+            return
+        await channel.send('👎')
+
 
     # じゃんけん
 
