@@ -112,10 +112,10 @@ async def on_message(message):
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
 
-        def rsp_check(m):
-            return (m.author == message.author) and (m.content in ['ぐー','ちょき','ぱー'])
+        def jankencheck(m):
+            return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
 
-        player_rsp = await client.wait_for('message', check=rsp_check)
+        reply = await client.wait_for("message", check=jankencheck)
         await channel.send('うおうおうおｗｗｗｗｗ')
 
         #
