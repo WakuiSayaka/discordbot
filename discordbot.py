@@ -40,7 +40,7 @@ async def reply(message):
     message_contents = extract_reply(message.clean_content)
     if message_contents == '':
         reply = f'{message.author.mention} 呼んだ？' # 返信メッセージの作成
-    else if message_contents == '/clear':
+    elif message_contents == '/clear':
         if message.author.guild_permissions.administrator:
             await message.channel.purge()
             reply = f'{message.author.mention} お掃除終わりました！'
