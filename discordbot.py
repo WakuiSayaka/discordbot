@@ -108,19 +108,17 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
-        await message.channel.send('最初はグー！じゃんけん！')
+        await message.channel.send('最初はぐー！じゃんけん！')
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
-
-        await message.channel.send('どこで')
 
         def rsp_check(m):
             return m.author == message.author and m.content in ['ぐー','ちょき','ぱー']
 
-        await message.channel.send('どこで')
 
-        player_rsp = await client.wait_for("message", check=rsp_check)
-        await message.channel.send('どこで')
+        player_rsp = await client.wait_for('message', check=rsp_check)
+        await channel.send(f'あなた：{player_rsp.content}')
+        await channel.send(f'わたし：{rsp[bot_rsp]}')
 
 
         bot_rsp = random.randint(0,2)
