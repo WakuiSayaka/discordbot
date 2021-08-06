@@ -109,14 +109,18 @@ async def on_message(message):
     # じゃんけん
     if message.content == '/rsp':
         await message.channel.send('最初はぐー！じゃんけん！')
+
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
 
-        def jankencheck(m):
+        def gomikasusine(m):
             return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
 
-        reply = await client.wait_for("message", check=jankencheck)
-        await channel.send('うおうおうおｗｗｗｗｗ')
+        reply = await client.wait_for("message", check=gomikasusine)
+
+
+        await message.channel.send('うおうおうおｗｗｗｗｗ')
+        await message.channel.send('どこどこどこどこ')
 
         #
         #
