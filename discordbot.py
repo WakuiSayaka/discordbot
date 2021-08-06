@@ -95,7 +95,6 @@ async def on_message(message):
 
         def check(reaction, user):
             return user == message.author and str(reaction.emoji) == '👍'
-
         try:
             reaction, user = await client.wait_for('reaction_add', timeout=20.0, check=check)
         except asyncio.TimeoutError:
