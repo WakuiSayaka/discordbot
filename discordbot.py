@@ -112,9 +112,16 @@ async def on_message(message):
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
 
+        await message.channel.send('どこで')
+
         def rsp_check(m):
             return m.author == message.author and m.content in ['ぐー','ちょき','ぱー']
+
+        await message.channel.send('どこで')
+
         player_rsp = await client.wait_for("message", check=rsp_check)
+        await message.channel.send('どこで')
+
 
         bot_rsp = random.randint(0,2)
         flag = (bot_rsp  - rsp.index(player_rsp.content) + 3)%3
@@ -122,6 +129,9 @@ async def on_message(message):
         await channel.send(f'あなた：{player_rsp.content}')
         await channel.send(f'わたし：{rsp[bot_rsp]}')
         await channel.send(judge[flag])
+
+
+
 
     if message.content == "！じゃんけん":
         await message.channel.send("最初はぐー、じゃんけん")
