@@ -120,8 +120,9 @@ async def on_message(message):
         player_rsp = await client.wait_for('message', check=rsp_check)
         await message.channel.send('どこどこどこどこ')
 
-        await channel.send(f'あなた：{player_rsp.content}')
-        await channel.send(f'わたし：{rsp[bot_rsp]}')
+        await channel.send(player_rsp.content)
+        await message.channel.send('どこどこどこどこ')
+        await channel.send(rsp[bot_rsp])
 
         await message.channel.send('どこどこどこどこ')
 
