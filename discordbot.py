@@ -81,7 +81,7 @@ async def on_message(message):
         else:
             await message.channel.send('管理者専用コマンドだよ！')
 
-    if message.channel.id != CHANNEL_ID__BOTROOM:
+    if message.channel.id != CHANNEL_ID_BOTROOM:
         return
 
     # 「/neko」と発言したら「にゃーん」が返る処理
@@ -89,7 +89,7 @@ async def on_message(message):
         await message.channel.send('にゃーん')
 
     # waitforの使用例コピペ
-    if message.content.startswith('$thumb'):
+    if message.content.startswith('/thumb'):
         channel = message.channel
         await channel.send('Send me that 👍 reaction, mate')
 
