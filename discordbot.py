@@ -4,7 +4,7 @@ import subprocess
 # インストールした discord.py を読み込む
 import discord
 
-# 自分のBotのアクセストークンに置き換えてください
+# Botのアクセストークン 環境変数から
 TOKEN = os.environ['DISCORDBOT_TOKEN_ID']
 
 
@@ -40,6 +40,12 @@ async def reply(message):
     message_contents = extract_reply(message.clean_content)
     if message_contents == '':
         reply = f'{message.author.mention} 呼んだ？' # 返信メッセージの作成
+    else if message_contents == '/clear':
+        if message.author.guild_permissions.administrator:
+            await message.channel.purge()
+            reply = f'{message.author.mention} お掃除終わりました！'
+        else:
+            reply = f'{message.author.mention} 管理者専用コマンドだよ！'
     else :
         reply = f'{message.author.mention} {extract_reply(message.clean_content)}\nってにゃに？' # 返信メッセージの作成
     await message.channel.send(reply) # 返信メッセージを送信
@@ -73,7 +79,7 @@ async def on_message(message):
             await message.channel.purge()
             await message.channel.send('お掃除終わりました！')
         else:
-            await message.channel.send('悪い事しちゃダメです！')
+            await message.channel.send('管理者専用コマンドだよ！')
 
     if message.channel.id != CHANNEL_ID__BOTROOM:
         return
@@ -88,7 +94,7 @@ async def on_message(message):
             await message.channel.send("ばいばーい！")
             await client.close()
         else:
-            await message.channel.send("管理者専用コマンドだよ！")
+            await message.channel.send("Bot管理者専用コマンドだよ！")
 
     # チャンネルの作成「/mkch」 /mkch example のようにチャンネル名の指定も可
     if message.content.startswith('/mkch'):
