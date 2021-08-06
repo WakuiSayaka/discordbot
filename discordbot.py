@@ -89,7 +89,7 @@ async def on_message(message):
         await message.channel.send('にゃーん')
 
     # waitforの使用例コピペ
-    if message.content.startswith('/thumb'):
+    if message.content.startswith('$thumb'):
         channel = message.channel
         await channel.send('Send me that 👍 reaction, mate')
 
@@ -98,7 +98,7 @@ async def on_message(message):
 
         try:
             reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
-        except ETIMEDOUT:
+        except asyncio.TimeoutError:
             await channel.send('👎')
         else:
             await channel.send('👍')
