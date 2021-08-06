@@ -108,31 +108,20 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
-        channel = message.channel
-        await channel.send('最初はグー！じゃんけん！')
-        rsp = ['グー','チョキ','パー']
-
-        draw = '引き分けです！'
-        lost = 'わたしの勝ちです！'
-        win  = 'あなたの勝ちです！'
+        await message.channel.send('最初はグー！じゃんけん！')
+        rsp = ['ぐー','ちょき','ぱー']
+        judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
 
         def rsp_check(m):
-            rsp = ['グー','チョキ','パー']
-            return m.content in rsp
-            # return m.content in rsp and m.author == message.author
-
+            return m.content in ['ぐー','ちょき','ぱー'] and m.author == message.author
         player_rsp = await client.wait_for('message', check=rsp_check)
-        bot_rsp = random.randint(0,2)
-        judge = (bot_rsp  - rsp.index(player_rsp) + 3)%3
 
-        await channel.send(f'あなた：{player_rsp}')
+        bot_rsp = random.randint(0,2)
+        flag = (bot_rsp  - rsp.index(player_rsp.content) + 3)%3
+
+        await channel.send(f'あなた：{player_rsp.content}')
         await channel.send(f'わたし：{rsp[bot_rsp]}')
-        if judge == 0:
-            await channel.send(draw)
-        elif judge == 1:
-            await channel.send(lost)
-        else:
-            await channel.send(win)
+        await channel.send(judge[flag])
 
     if message.content == "！じゃんけん":
         await message.channel.send("最初はぐー、じゃんけん")
