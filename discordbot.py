@@ -119,13 +119,8 @@ async def on_message(message):
         player = await client.wait_for("message", check=rsp_check)
 
         await message.channel.send(player.content)
-
-
-
-
         bot_rsp = random.randint(0,2)
-
-        await channel.send(rsp[bot_rsp])
+        await channel.send(bot_rsp)
         #
         #
         # flag = (bot_rsp  - rsp.index(player_rsp.content) + 3)%3
