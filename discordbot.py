@@ -13,10 +13,11 @@ client = discord.Client()
 
 
 # 反応するチャンネルのID
-CHANNEL_ID = 872481513504124970
+CHANNEL_ID_BOTROOM = 872481513504124970
+CHANNEL_ID_GENERAL = 872192669965754451
 
 async def greet():
-    channel = client.get_channel(CHANNEL_ID)
+    channel = client.get_channel(CHANNEL_ID_BOTROOM)
     await channel.send('おはようございます！');
 
 # 起動時に動作する処理
@@ -62,6 +63,10 @@ async def on_message(message):
     if client.user in message.mentions:
         await reply(message) # 返信する非同期関数を実行
 
+    # --------------以下、特定のチャンネルにのみ反応---------------------
+    if message.channel.id not in [CHANNEL_ID_BOTROOM,CHANNEL_ID_GENERAL]:
+        return
+
     # 管理者のみ「/clear」と発言したらテキストチャンネル内のログの全削除
     if message.content == '/clear':
         if message.author.guild_permissions.administrator:
@@ -70,10 +75,7 @@ async def on_message(message):
         else:
             await message.channel.send('悪い事しちゃダメです！')
 
-    # --------------以下、特定のチャンネルにのみ反応---------------------
-    # 複数指定する場合は
-    # if message.channel.id not in [チャンネルID, チャンネルID2]:
-    if message.channel.id != CHANNEL_ID:
+    if message.channel.id != CHANNEL_ID__BOTROOM:
         return
 
     # 「/neko」と発言したら「にゃーん」が返る処理
@@ -88,7 +90,7 @@ async def on_message(message):
         else:
             await message.channel.send("管理者専用コマンドだよ！")
 
-    # チャンネルの作成「/mkch」 (startswith... /mkchから始まる文字列に反応)
+    # チャンネルの作成「/mkch」 /mkch example のようにチャンネル名の指定も可
     if message.content.startswith('/mkch'):
         channel_name = 'new'
         if (len('/mkch')+1) < len(message.content):
