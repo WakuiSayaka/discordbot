@@ -1,6 +1,8 @@
 # 環境変数用 標準ライブラリなのでインストール不要
 import os
 import subprocess
+
+import random
 # インストールした discord.py を読み込む
 import discord
 
@@ -105,6 +107,33 @@ async def on_message(message):
 
 
     # じゃんけん
+    if message.content == '/rsp':
+        channel = message.channel
+        await channel.send('最初はグー！じゃんけん！')
+        rsp = ['グー','チョキ','パー']
+
+        draw = '引き分けです！'
+        lost = 'わたしの勝ちです！'
+        win  = 'あなたの勝ちです！'
+
+        def rsp_check(m):
+            return m.content in rsp and m.author == message.author
+
+        player_rsp = await client.wait_for('message', check=rsp_check)
+
+        bot_rsp = random.randint(0,2)
+
+        judge = (bot_rsp  - rsp.index(player_rsp) + 3)%3
+
+        await channel.send(f'あなた：{player_rsp}')
+        await channel.send(f'わたし：{rsp[bot_rsp]}')
+        
+        if judge == 0:
+            await channel.send(draw)
+        elif judge == 1:
+            await channel.send(lost)
+        else:
+            await channel.send(win)
 
     # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
     if "!stop" in message.content:
