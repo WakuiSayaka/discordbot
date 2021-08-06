@@ -117,17 +117,16 @@ async def on_message(message):
         win  = 'あなたの勝ちです！'
 
         def rsp_check(m):
-            return m.content in rsp and m.author == message.author
+            rsp = ['グー','チョキ','パー']
+            return m.content in rsp
+            # return m.content in rsp and m.author == message.author
 
         player_rsp = await client.wait_for('message', check=rsp_check)
-
         bot_rsp = random.randint(0,2)
-
         judge = (bot_rsp  - rsp.index(player_rsp) + 3)%3
 
         await channel.send(f'あなた：{player_rsp}')
         await channel.send(f'わたし：{rsp[bot_rsp]}')
-        
         if judge == 0:
             await channel.send(draw)
         elif judge == 1:
