@@ -113,8 +113,8 @@ async def on_message(message):
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
 
         def rsp_check(m):
-            return m.content in ['ぐー','ちょき','ぱー'] and m.author == message.author
-        player_rsp = await client.wait_for('message', check=rsp_check)
+            return m.author == message.author and m.content in ['ぐー','ちょき','ぱー']
+        player_rsp = await client.wait_for("message", check=rsp_check)
 
         bot_rsp = random.randint(0,2)
         flag = (bot_rsp  - rsp.index(player_rsp.content) + 3)%3
