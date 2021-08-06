@@ -113,24 +113,19 @@ async def on_message(message):
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
 
-        def gomikasusine(m):
+        def rsp_check(m):
             return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
 
-        reply = await client.wait_for("message", check=gomikasusine)
+        player = await client.wait_for("message", check=rsp_check)
+
+        await message.channel.send(player.content)
 
 
-        await message.channel.send('うおうおうおｗｗｗｗｗ')
-        await message.channel.send('どこどこどこどこ')
-
-        await message.channel.send(reply.content)
 
 
-        #
-        #
-        # bot_rsp = random.randint(0,2)
-        #
-        # await channel.send(player_rsp.content)
-        # await channel.send(rsp[bot_rsp])
+        bot_rsp = random.randint(0,2)
+
+        await channel.send(rsp[bot_rsp])
         #
         #
         # flag = (bot_rsp  - rsp.index(player_rsp.content) + 3)%3
