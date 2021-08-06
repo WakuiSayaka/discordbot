@@ -97,11 +97,13 @@ async def on_message(message):
             return user == message.author and str(reaction.emoji) == '👍'
 
         try:
-            reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+            reaction, user = await client.wait_for('reaction_add', timeout=1.0, check=check)
         except asyncio.TimeoutError:
             await channel.send('👎')
         else:
             await channel.send('👍')
+
+    # じゃんけん
 
     # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
     if "!stop" in message.content:
