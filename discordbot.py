@@ -113,12 +113,9 @@ async def on_message(message):
         judge = ['引き分けです！','わたしの勝ちです！','あなたの勝ちです！']
         def rsp_check(m):
             return m.author == message.author and m.content in ['ぐー','ちょき','ぱー']
-        player_rsp = await client.wait_for('message', check=rsp_check)
-        # await message.channel.send('どこどこどこどこ')
-        if player_rsp.content in rsp:
-            await channel.send(player_rsp.content)
-        else:
-            await channel.send("ごぎがががぎご")
+        temp_rsp = await client.wait_for('message', check=rsp_check)
+        player_rsp = temp_rsp.content
+        await channel.send(player_rsp)
 
 
 
