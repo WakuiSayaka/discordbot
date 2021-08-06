@@ -117,6 +117,8 @@ async def on_message(message):
         # await message.channel.send('どこどこどこどこ')
         if player_rsp.content in rsp:
             await channel.send(player_rsp.content)
+        else:
+            await channel.send("ごぎがががぎご")
 
 
 
