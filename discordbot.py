@@ -47,7 +47,7 @@ async def reply(message):
         else:
             reply = f'{message.author.mention} 管理者専用コマンドだよ！'
     else :
-        reply = f'{message.author.mention} {extract_reply(message.clean_content)}\nってにゃに？' # 返信メッセージの作成
+        reply = f'{message.author.mention} {message_contents}\nってにゃに？' # 返信メッセージの作成
     await message.channel.send(reply) # 返信メッセージを送信
 
 # 発言したチャンネルのカテゴリ内にチャンネルを作成する非同期関数
@@ -87,6 +87,21 @@ async def on_message(message):
     # 「/neko」と発言したら「にゃーん」が返る処理
     if message.content == '/neko':
         await message.channel.send('にゃーん')
+
+    # waitforの使用例コピペ
+    if message.content.startswith('$thumb'):
+        channel = message.channel
+        await channel.send('Send me that 👍 reaction, mate')
+
+        def check(reaction, user):
+            return user == message.author and str(reaction.emoji) == '👍'
+
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+        except asyncio.TimeoutError:
+            await channel.send('👎')
+        else:
+            await channel.send('👍')
 
     # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
     if "!stop" in message.content:
