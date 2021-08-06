@@ -122,6 +122,9 @@ async def on_message(message):
         await message.channel.send('うおうおうおｗｗｗｗｗ')
         await message.channel.send('どこどこどこどこ')
 
+        await message.channel.send(reply.content)
+
+
         #
         #
         # bot_rsp = random.randint(0,2)
