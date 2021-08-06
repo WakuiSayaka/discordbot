@@ -120,9 +120,8 @@ async def on_message(message):
 
         await message.channel.send(player.content)
         bot_rsp = random.randint(0,2)
-        await channel.send(bot_rsp)
-        #
-        #
+        await message.channel.send(rsp[bot_rsp])
+
         # flag = (bot_rsp  - rsp.index(player_rsp.content) + 3)%3
         # await message.channel.send('どこどこどこどこ')
         #
