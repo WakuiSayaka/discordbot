@@ -117,51 +117,11 @@ async def on_message(message):
             return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
 
         player = await client.wait_for("message", check=rsp_check)
+        bot = random.randint(0,2)
 
-        bot_rsp = random.randint(0,2)
-        flag = (bot_rsp  - rsp.index(player.content) + 3)%3
         await message.channel.send(f'あなた：{player.content}')
-        await message.channel.send(f'わたし：{rsp[bot_rsp]}')
-        await message.channel.send(judge[flag])
-
-
-
-
-    if message.content == "！じゃんけん":
-        await message.channel.send("最初はぐー、じゃんけん")
-
-        jkbot = random.choice(("ぐー", "ちょき", "ぱー"))
-        draw = "引き分けだよ～"
-        wn = "君の勝ち！"
-        lst = random.choice(("私の勝ち！弱ｗｗｗｗｗｗｗｗｗｗｗｗやめたら？じゃんけん",
-                              "私の勝ちだね(∩´∀｀)∩、また挑戦してね！"))
-
-        def jankencheck(m):
-            return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
-
-        reply = await client.wait_for("message", check=jankencheck)
-        if reply.content == jkbot:
-            judge = draw
-        else:
-            if reply.content == "ぐー":
-                if jkbot == "ちょき":
-                    judge = wn
-                else:
-                    judge = lst
-
-            elif reply.content == "ちょき":
-                if jkbot == "ぱー":
-                    judge = wn
-                else:
-                    judge = lst
-
-            else:
-                if jkbot == "ぐー":
-                    judge = wn
-                else:
-                    judge = lst
-
-        await message.channel.send(judge)
+        await message.channel.send(f'わたし：{rsp[bot]}')
+        await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
 
     # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
     if "!stop" in message.content:
