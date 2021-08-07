@@ -151,8 +151,6 @@ async def on_message(message):
         finally:
             if flag == 0:
                 await message.channel.send('たいむあうと！')
-            else:
-                await message.channel.send('また遊びましょ！')
 
 
 
