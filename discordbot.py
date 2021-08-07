@@ -142,8 +142,6 @@ async def on_message(message):
         except asyncio.TimeoutError:
             #何故かタイムアウト処理がされないのでfinallyに記述
             await message.channel.send('なんで？')
-        except :
-            await message.channel.send('なんでなの？')
         else:
             bot  = random.randint(0,2)
             flag = 1
