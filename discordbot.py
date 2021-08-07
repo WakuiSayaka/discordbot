@@ -131,7 +131,7 @@ async def on_message(message):
         flag = 0
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
-        await message.channel.send(f'{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
+        await message.channel.send(f'20秒以内に{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
         await message.channel.send('最初はぐー！じゃんけん！')
 
         def rsp_check(m):
