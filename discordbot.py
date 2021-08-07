@@ -143,7 +143,7 @@ async def on_message(message):
             player = await client.wait_for("message", timeout=20.0 , check=rsp_check)
         except asyncio.TimeoutError:
             #何故かタイムアウト処理がされないのでfinallyに記述
-            # await message.channel.send('なんで？')
+            await message.channel.send('なんで？')
         else:
             bot  = random.randint(0,2)
             # flag = 1
@@ -151,9 +151,9 @@ async def on_message(message):
             await message.channel.send(f'わたし：{rsp[bot]}')
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
             return
-        # finally:
+        finally:
         #     if flag == 0:
-        await message.channel.send('たいむあうと！')
+            await message.channel.send('たいむあうと！')
 
 
 
