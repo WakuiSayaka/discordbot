@@ -61,11 +61,6 @@ async def create_channel(message, channel_name):
     new_channel = await category.create_text_channel(name=channel_name)
     return new_channel
 
-
-
-
-
-
 # コマンドに対応するリストデータを取得する関数を定義
 def get_data(message):
     command = re.search(r'-\w+',message.content)
@@ -133,8 +128,9 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
-        await message.channel.send('最初はぐー！じゃんけん！')
         rsp = ['ぐー','ちょき','ぱー']
+        await message.channel.send(f'{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
+        await message.channel.send('最初はぐー！じゃんけん！')
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
 
         def rsp_check(m):
