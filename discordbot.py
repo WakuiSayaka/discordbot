@@ -184,7 +184,8 @@ async def on_message(message):
     hour = date.hour
     min  = date.minute
     if message.content == '何時？':
-        await message.channel.send(str(hour) + '時です！')
+        await message.channel.send(date)
+        # await message.channel.send(str(hour) + '時です！')
     if message.content == '何分？':
         await message.channel.send(str(min) + '分です！')
     if message.content == '何時何分？':
