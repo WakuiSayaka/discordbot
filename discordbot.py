@@ -172,13 +172,14 @@ async def on_message(message):
             channel_name = message.content[len('/mkch')+1:]
         # チャンネルを作成する非同期関数を実行して Channel オブジェクトを取得
         new_channel = await create_channel(message, channel_name)
-
         # チャンネルのリンクと作成メッセージを送信
         text = f'{new_channel.mention} を作成しました'
         await message.channel.send(text)
 
     # 時刻の取得
-    date = datetime.datetime.now()
+    # タイムゾーンの生成
+    JST = timezone(timedelta(hours=+9), 'JST')
+    date = datetime.datetime.now(JST)
     hour = date.hour
     min  = date.minute
     if message.content == '何時？':
