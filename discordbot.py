@@ -180,7 +180,7 @@ async def on_message(message):
         await message.channel.send(text)
 
     # 時刻の取得
-    date = datetime(2021,8,7,17,tzinfo=zoneinfo("Asia/Tokyo"))
+    date = datetime.datetime.now(tz=ZoneInfo("Asia/Tokyo"))
     hour = date.hour
     min  = date.minute
     if message.content == '何時？':
