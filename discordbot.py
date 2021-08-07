@@ -130,7 +130,7 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
-        # flag = 0
+        flag = 0
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
         await message.channel.send(f'20秒以内に{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
@@ -146,13 +146,12 @@ async def on_message(message):
             await message.channel.send('なんで？')
         else:
             bot  = random.randint(0,2)
-            # flag = 1
+            flag = 1
             await message.channel.send(f'あなた：{player.content}')
             await message.channel.send(f'わたし：{rsp[bot]}')
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
-            return
         finally:
-        #     if flag == 0:
+            if flag == 0:
             await message.channel.send('たいむあうと！')
 
 
