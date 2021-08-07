@@ -178,8 +178,7 @@ async def on_message(message):
         await message.channel.send(text)
 
     # 時刻の取得
-    JST  = timezone(timedelta(hours=+9), 'JST')
-    date = datetime.datetime.now(JST)
+    date = datetime.datetime.now()
     hour = date.hour
     min  = date.minute
     if message.content == '何時？':
