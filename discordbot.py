@@ -152,7 +152,7 @@ async def on_message(message):
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
         finally:
             if flag == 0:
-            await message.channel.send('たいむあうと！')
+                await message.channel.send('たいむあうと！')
 
 
 
