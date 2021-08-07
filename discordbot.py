@@ -5,6 +5,8 @@ import subprocess
 import random
 # 正規表現
 import re
+# 時刻
+import datetime
 # インストールした discord.py を読み込む
 import discord
 
@@ -175,7 +177,18 @@ async def on_message(message):
         text = f'{new_channel.mention} を作成しました'
         await message.channel.send(text)
 
+    # 時刻の取得
+    date = datetime.datetime.now()
+    hour = date.hour
+    min = date.minute
+    if message.content == '何時？':
+        await message.channel.send(str(hour) + '時です。')
+    if message.content == '何分？':
+        await message.channel.send(str(min) + '分です。')
+    if message.content == '何時何分？':
+        await message.channel.send(str(hour) + '時' + str(min) + '分です。')
 
+    # データテーブルの表示
     if message.content.startswith('/get_data'):
         await message.channel.send(get_data(message))
 
