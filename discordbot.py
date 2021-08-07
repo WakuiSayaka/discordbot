@@ -185,9 +185,9 @@ async def on_message(message):
     if message.content == '何時？':
         await message.channel.send(f'{date.hour}時です！')
     if message.content == '何分？':
-        await message.channel.send(f'{date.min}分です！')
+        await message.channel.send(f'{date.minute}分です！')
     if message.content == '何時何分？':
-        await message.channel.send(f'{date.hour}時{date.min}分です！')
+        await message.channel.send(f'{date.hour}時{date.minute}分です！')
 
     # データテーブルの表示
     if message.content.startswith('/get_data'):
