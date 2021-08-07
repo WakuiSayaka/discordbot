@@ -129,18 +129,22 @@ async def on_message(message):
     # じゃんけん
     if message.content == '/rsp':
         rsp = ['ぐー','ちょき','ぱー']
+        judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
         await message.channel.send(f'{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
         await message.channel.send('最初はぐー！じゃんけん！')
-        judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
 
         def rsp_check(m):
             return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
 
-        player = await client.wait_for("message", check=rsp_check)
-        bot = random.randint(0,2)
-        await message.channel.send(f'あなた：{player.content}')
-        await message.channel.send(f'わたし：{rsp[bot]}')
-        await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
+        try:
+            player = await client.wait_for("message", timeout=20.0 , check=rsp_check)
+        except asyncio.TimeoutError:
+            await message.channel.send('たいむあうと！')
+        else:
+            bot = random.randint(0,2)
+            await message.channel.send(f'あなた：{player.content}')
+            await message.channel.send(f'わたし：{rsp[bot]}')
+            await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
 
 
     # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
