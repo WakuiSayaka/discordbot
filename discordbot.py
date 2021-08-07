@@ -1,8 +1,10 @@
 # 環境変数用 標準ライブラリなのでインストール不要
 import os
 import subprocess
-
+# 乱数用
 import random
+# 正規表現
+import re
 # インストールした discord.py を読み込む
 import discord
 
@@ -60,6 +62,24 @@ async def create_channel(message, channel_name):
     return new_channel
 
 
+
+
+
+
+# コマンドに対応するリストデータを取得する関数を定義
+def get_data(message):
+    command = re.search(r'-\w+',message.content)
+    data_table = {
+        '-members': message.guild.members, # メンバーのリスト
+        '-roles': message.guild.roles, # 役職のリスト
+        '-text_channels': message.guild.text_channels, # テキストチャンネルのリスト
+        '-voice_channels': message.guild.voice_channels, # ボイスチャンネルのリスト
+        '-category_channels': message.guild.categories, # カテゴリチャンネルのリスト
+    }
+    return data_table.get(command.group(), '無効なコマンドです')
+
+
+
 # メッセージ受信時に動作する処理
 @client.event
 async def on_message(message):
@@ -67,13 +87,16 @@ async def on_message(message):
     if message.author.bot:
         return
 
+
     # 話しかけられたかの判定
     if client.user in message.mentions:
         await reply(message) # 返信する非同期関数を実行
 
+
     # --------------以下、特定のチャンネルにのみ反応---------------------
     if message.channel.id not in [CHANNEL_ID_BOTROOM,CHANNEL_ID_GENERAL]:
         return
+
 
     # 管理者のみ「/clear」と発言したらテキストチャンネル内のログの全削除
     if message.content == '/clear':
@@ -86,9 +109,11 @@ async def on_message(message):
     if message.channel.id != CHANNEL_ID_BOTROOM:
         return
 
+
     # 「/neko」と発言したら「にゃーん」が返る処理
     if message.content == '/neko':
         await message.channel.send('にゃーん')
+
 
     # waitforの使用例コピペ
     if message.content.startswith('$thumb'):
@@ -109,7 +134,6 @@ async def on_message(message):
     # じゃんけん
     if message.content == '/rsp':
         await message.channel.send('最初はぐー！じゃんけん！')
-
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
 
@@ -118,10 +142,10 @@ async def on_message(message):
 
         player = await client.wait_for("message", check=rsp_check)
         bot = random.randint(0,2)
-
         await message.channel.send(f'あなた：{player.content}')
         await message.channel.send(f'わたし：{rsp[bot]}')
         await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
+
 
     # ロール「Bot管理者」が「!stop」と発言したらログアウト処理
     if "!stop" in message.content:
@@ -130,6 +154,7 @@ async def on_message(message):
             await client.close()
         else:
             await message.channel.send("Bot管理者専用コマンドだよ！")
+
 
     # チャンネルの作成「/mkch」 /mkch example のようにチャンネル名の指定も可
     if message.content.startswith('/mkch'):
@@ -144,6 +169,8 @@ async def on_message(message):
         await message.channel.send(text)
 
 
+    if message.content.startswith('/get_data'):
+        await message.channel.send(get_data(message))
 
 
 # Botの起動とDiscordサーバーへの接続
