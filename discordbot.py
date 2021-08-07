@@ -180,7 +180,7 @@ async def on_message(message):
     # タイムゾーンの生成
     JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
     date = datetime.datetime.now(JST)
-    if message.content == '今日は？':
+    if message.content == '今は？':
         await message.channel.send(f'{date}です！')
     if message.content == '何時？':
         await message.channel.send(f'{date.hour}時です！')
