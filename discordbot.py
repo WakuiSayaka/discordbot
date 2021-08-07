@@ -137,7 +137,7 @@ async def on_message(message):
         await message.channel.send('最初はぐー！じゃんけん！')
 
         def rsp_check(m):
-            return (m.author == message.author) and (m.content in ['ぐー', 'ちょき', 'ぱー'])
+            return m.author == message.author and m.content in rsp
 
         try:
             player = await client.wait_for("message", timeout=20.0 , check=rsp_check)
