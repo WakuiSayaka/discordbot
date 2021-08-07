@@ -178,7 +178,7 @@ async def on_message(message):
 
     # 時刻の取得
     # タイムゾーンの生成
-    JST = timezone(timedelta(hours=+9), 'JST')
+    JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
     date = datetime.datetime.now(JST)
     hour = date.hour
     min  = date.minute
