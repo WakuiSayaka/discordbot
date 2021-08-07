@@ -120,7 +120,7 @@ async def on_message(message):
         try:
             reaction, user = await client.wait_for('reaction_add', timeout=20.0, check=check)
         except asyncio.TimeoutError:
-            await channel.send('👎')
+            await channel.send('👎') #何故かタイムアウト処理がされない
         else:
             await channel.send('👍')
             return
@@ -128,6 +128,7 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
+        flag = 0
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
         await message.channel.send(f'{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
@@ -139,14 +140,16 @@ async def on_message(message):
         try:
             player = await client.wait_for("message", timeout=20.0 , check=rsp_check)
         except asyncio.TimeoutError:
-            await message.channel.send('たいむあうと！')
+            #何故かタイムアウト処理がされないのでfinallyに記述
         else:
-            bot = random.randint(0,2)
+            bot  = random.randint(0,2)
+            flag = 1
             await message.channel.send(f'あなた：{player.content}')
             await message.channel.send(f'わたし：{rsp[bot]}')
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
         finally:
-            await message.channel.send('おわおわり！！！')
+            if flag == 0:
+                await message.channel.send('たいむあうと！')
 
 
 
