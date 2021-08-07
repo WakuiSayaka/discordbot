@@ -7,6 +7,8 @@ import random
 import re
 # 時刻
 import datetime
+# タイムゾーン(python3.9以降)
+import zoneinfo
 # インストールした discord.py を読み込む
 import discord
 
@@ -178,15 +180,15 @@ async def on_message(message):
         await message.channel.send(text)
 
     # 時刻の取得
-    date = datetime.datetime.now()
+    date = datetime(2021,8,7,17,tzinfo=zoneinfo("Asia/Tokyo"))
     hour = date.hour
-    min = date.minute
+    min  = date.minute
     if message.content == '何時？':
-        await message.channel.send(str(hour) + '時です。')
+        await message.channel.send(str(hour) + '時です！')
     if message.content == '何分？':
-        await message.channel.send(str(min) + '分です。')
+        await message.channel.send(str(min) + '分です！')
     if message.content == '何時何分？':
-        await message.channel.send(str(hour) + '時' + str(min) + '分です。')
+        await message.channel.send(str(hour) + '時' + str(min) + '分です！')
 
     # データテーブルの表示
     if message.content.startswith('/get_data'):
