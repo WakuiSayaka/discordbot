@@ -180,14 +180,12 @@ async def on_message(message):
     # タイムゾーンの生成
     JST = datetime.timezone(datetime.timedelta(hours=+9), 'JST')
     date = datetime.datetime.now(JST)
-    hour = date.hour
-    min  = date.minute
     if message.content == '何時？':
-        await message.channel.send(f'{hour}時です！')
+        await message.channel.send(f'{date.hour}時です！')
     if message.content == '何分？':
-        await message.channel.send(str(min) + '分です！')
+        await message.channel.send(f'{date.min}分です！')
     if message.content == '何時何分？':
-        await message.channel.send(str(hour) + '時' + str(min) + '分です！')
+        await message.channel.send(f'{date.hour}時{date.min}分です！')
 
     # データテーブルの表示
     if message.content.startswith('/get_data'):
