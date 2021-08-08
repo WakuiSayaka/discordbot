@@ -149,6 +149,7 @@ async def on_message(message):
             await message.channel.send(f'あなた：{player.content}')
             await message.channel.send(f'わたし：{rsp[bot]}')
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
+            return 
 
 
 
