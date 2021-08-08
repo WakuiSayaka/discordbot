@@ -7,6 +7,7 @@ import random
 import re
 # 時刻
 import datetime
+# wait_forのTimeoutErrorに必要
 import asyncio
 # インストールした discord.py を読み込む
 import discord
@@ -123,7 +124,7 @@ async def on_message(message):
         try:
             reaction, user = await client.wait_for('reaction_add', timeout=20.0, check=check)
         except asyncio.TimeoutError:
-            await channel.send('👎') #何故かタイムアウト処理がされない
+            await channel.send('👎')
         else:
             await channel.send('👍')
             return
@@ -131,29 +132,24 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
-        flag = 0
         rsp = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
-        await message.channel.send(f'20秒以内に{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
+        await message.channel.send(f'10秒以内に{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
         await message.channel.send('最初はぐー！じゃんけん！')
 
         def rsp_check(m):
             return m.author == message.author and m.content in rsp
 
         try:
-            player = await client.wait_for("message", timeout=20.0 , check=rsp_check)
+            player = await client.wait_for("message", timeout=10.0 , check=rsp_check)
         except asyncio.TimeoutError:
-            #何故かタイムアウト処理がされないのでfinallyに記述
-            await message.channel.send('なんで？')
+            await message.channel.send('たいむあうと！')
         else:
             bot  = random.randint(0,2)
-            flag = 1
             await message.channel.send(f'あなた：{player.content}')
             await message.channel.send(f'わたし：{rsp[bot]}')
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
-        finally:
-            if flag == 0:
-                await message.channel.send('たいむあうと！')
+
 
 
 
