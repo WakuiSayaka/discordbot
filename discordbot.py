@@ -7,6 +7,7 @@ import random
 import re
 # 時刻
 import datetime
+import asyncio
 # インストールした discord.py を読み込む
 import discord
 
