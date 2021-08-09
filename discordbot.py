@@ -191,6 +191,20 @@ async def on_message(message):
     if message.content.startswith('/get_data'):
         await message.channel.send(get_data(message))
 
+    if '/join' == message.content:
+        #join(message)
+        if message.author.voice is None:
+            await message.channel.send("あなたはボイスチャンネルに接続していません。")
+            return
+        await message.author.voice.channel.connect()
+
+    if '/leave' == message.content:
+        #leave(message)
+        if message.guild.voice_client is None:
+            await message.channel.send("接続していません。")
+            return
+        await message.guild.voice_client.disconnect()
+
 
 
 # Botの起動とDiscordサーバーへの接続
