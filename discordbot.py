@@ -18,15 +18,10 @@ TOKEN = os.environ['DISCORDBOT_TOKEN_ID']
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
 
-# libopusのロード
-# if not discord.opus.is_loaded():
-#     discord.opus.load_opus("heroku-buildpack-libopus")
-
-
 # 反応するチャンネルのID
-CHANNEL_ID_BOTROOM = 872481513504124970
-CHANNEL_ID_GENERAL = 872192669965754451
-
+CHANNEL_ID_BOTROOM    = 872481513504124970
+CHANNEL_ID_GENERAL    = 872192669965754451
+CHANNEL_ID_VC_GENERAL = 872192669965754452
 
 
 
@@ -212,13 +207,8 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
 
     if '/play' == message.content:
-        if message.author.voice is None:
-            await message.channel.send("あなたはボイスチャンネルに接続していません。")
-            return
-        if message.guild.voice_client is None:
-            await message.channel.send("接続していません。")
-            return
-        message.guild.voicece_client.play(discord.FFmpegPCMAudio("./greeting.wav"))
+        vc_channel = client.get_channel(CHANNEL_ID_VC_GENERAL)
+        await vc_channel.connect().play(discord.FFmpegAudio("greeting.mp3"))
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
