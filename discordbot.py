@@ -209,6 +209,11 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
 
 if message.content == "/play":
+    if not discord.opus.is_loaded():
+        await message.channel.send("libopusをロードします")
+        #もし未ロードだったら
+        discord.opus.load_opus("heroku-buildpack-libopus")
+    await message.channel.send("準備完了")
     if message.guild.voice_client is None:
         await message.channel.send("接続していません。")
         return
