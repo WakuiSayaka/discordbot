@@ -218,7 +218,7 @@ async def on_message(message):
         if message.guild.voice_client is None:
             await message.channel.send("接続していません。")
             return
-        message.guild.voicece_client.play(discord.FFmpegPCMAudio("greeting.wav"))
+        # message.guild.voicece_client.play(discord.FFmpegPCMAudio("greeting.wav"))
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
