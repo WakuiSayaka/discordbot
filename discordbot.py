@@ -209,6 +209,7 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
 
     if message.content == "/play":
+        discord.opus.load_opus("heroku-buildpack-libopus")
         if not discord.opus.is_loaded():
             await message.channel.send("libopusをロードします")
             #もし未ロードだったら
