@@ -209,12 +209,8 @@ async def on_message(message):
     if '/play' == message.content:
         vc_channel = client.get_channel(CHANNEL_ID_VC_GENERAL)
         vc = channel.guild.voice_client
-        try:
-            await vc.play(discord.FFmpegPCMAudio("greeting.mp3"))
-        except Exception as e:
-            await message.channel.send(str(e))
-            await message.guild.voice_client.disconnect()
-            return
+        await vc.play(discord.FFmpegPCMAudio("./greeting.mp3"))
+
 
 
 # Botの起動とDiscordサーバーへの接続
