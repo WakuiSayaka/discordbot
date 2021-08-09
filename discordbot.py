@@ -210,7 +210,17 @@ async def on_message(message):
         if not discord.opus.is_loaded():
             discord.opus.load_opus("heroku-buildpack-libopus")
         vc_channel = client.get_channel(CHANNEL_ID_VC_GENERAL)
-        await vc_channel.connect().play(discord.FFmpegAudio("greeting.mp3"))
+        try :
+            vc = await channel.connect()
+        except Exception as e:
+            await message.channel.send(str(e))
+            return
+        try:
+            await vc.play(discord.FFmpegPCMAudio("greeting.mp3"))
+        except Exception as e:
+            await message.channel.send(str(e))
+            await message.guild.voice_client.disconnect()
+            return
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
