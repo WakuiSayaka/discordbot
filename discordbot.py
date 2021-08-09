@@ -207,22 +207,14 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
 
     if '/play' == message.content:
-        await message.channel.send("どこまで？")
         vc_channel = client.get_channel(CHANNEL_ID_VC_GENERAL)
-        await message.channel.send("いってる？")
-        try :
-            vc = await channel.connect()
-        except Exception as e:
-            await message.channel.send(str(e))
-            return
-        await message.channel.send("どこまで？")
+        vc = channel.guild.voice_client
         try:
             await vc.play(discord.FFmpegPCMAudio("greeting.mp3"))
         except Exception as e:
             await message.channel.send(str(e))
             await message.guild.voice_client.disconnect()
             return
-        await message.channel.send("どこまで？")
 
 
 # Botの起動とDiscordサーバーへの接続
