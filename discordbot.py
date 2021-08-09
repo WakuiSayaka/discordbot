@@ -207,6 +207,8 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
 
     if '/play' == message.content:
+        if not discord.opus.is_loaded():
+            discord.opus.load_opus("heroku-buildpack-libopus")
         vc_channel = client.get_channel(CHANNEL_ID_VC_GENERAL)
         await vc_channel.connect().play(discord.FFmpegAudio("greeting.mp3"))
 
