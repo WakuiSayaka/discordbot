@@ -132,7 +132,7 @@ async def on_message(message):
 
     # じゃんけん
     if message.content == '/rsp':
-        rsp = ['ぐー','ちょき','ぱー']
+        rsp   = ['ぐー','ちょき','ぱー']
         judge = ['引き分けです！','あなたの勝ちです！','わたしの勝ちです！']
         await message.channel.send(f'10秒以内に{rsp[0]}、{rsp[1]}、{rsp[2]}のどれかで返してね！')
         await message.channel.send('最初はぐー！じゃんけん！')
@@ -145,11 +145,11 @@ async def on_message(message):
         except asyncio.TimeoutError:
             await message.channel.send('たいむあうと！')
         else:
-            bot  = random.randint(0,2)
+            bot = random.randint(0,2)
             await message.channel.send(f'あなた：{player.content}')
             await message.channel.send(f'わたし：{rsp[bot]}')
             await message.channel.send(judge[(bot  - rsp.index(player.content) + 3)%3])
-            return 
+            return
 
 
 
@@ -190,6 +190,22 @@ async def on_message(message):
     # データテーブルの表示
     if message.content.startswith('/get_data'):
         await message.channel.send(get_data(message))
+
+
+
+@bot.command()
+async def join(ctx):
+    """Botをボイスチャンネルに入室させます。"""
+    voice_state = ctx.author.voice
+
+    if (not voice_state) or (not voice_state.channel):
+        #もし送信者がどこのチャンネルにも入っていないなら
+        await ctx.send("先にボイスチャンネルに入っている必要があります。")
+        return
+
+    channel = voice_state.channel #送信者のチャンネル
+
+    await channel.connect() #VoiceChannel.connect()を使用
 
 
 # Botの起動とDiscordサーバーへの接続
