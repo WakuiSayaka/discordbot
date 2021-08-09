@@ -7,6 +7,8 @@ import random
 import re
 # 時刻
 import datetime
+# load_opus用
+import ctypes
 # wait_forのTimeoutErrorに必要
 import asyncio
 # インストールした discord.py を読み込む
@@ -206,10 +208,11 @@ async def on_message(message):
             return
         await message.guild.voice_client.disconnect()
 
-    if '/play' == message.content:
-        vc_channel = client.get_channel(CHANNEL_ID_VC_GENERAL)
-        vc = channel.guild.voice_client
-        await vc.play(discord.FFmpegPCMAudio("./greeting.mp3"))
+if message.content == "/play":
+    if message.guild.voice_client is None:
+        await message.channel.send("接続していません。")
+        return
+    message.guild.voice_client.play(discord.FFmpegPCMAudio("greeting.mp3"))
 
 
 
