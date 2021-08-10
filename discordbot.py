@@ -212,7 +212,6 @@ async def on_message(message):
         await message.guild.voice_client.disconnect()
 
     # 音声の再生はherokuでうまく出来なかった
-    # やるとしてもラズベリーパイなどを使った方が良さそう
     # if message.content == "/play":
     #     if message.guild.voice_client is None:
     #         await message.channel.send("接続していません。")
