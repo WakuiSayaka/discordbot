@@ -7,8 +7,6 @@ import random
 import re
 # 時刻
 import datetime
-# load_opus用
-import ctypes
 # wait_forのTimeoutErrorに必要
 import asyncio
 # インストールした discord.py を読み込む
@@ -16,6 +14,7 @@ import discord
 
 # Botのアクセストークン 環境変数から
 TOKEN = os.environ['DISCORDBOT_TOKEN_ID']
+
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
@@ -194,30 +193,25 @@ async def on_message(message):
     if message.content.startswith('/get_data'):
         await message.channel.send(get_data(message))
 
-    if '/join' == message.content:
+    if message.content == '/join' :
         #join(message)
         if message.author.voice is None:
             await message.channel.send("あなたはボイスチャンネルに接続していません。")
             return
         await message.author.voice.channel.connect()
 
-    if '/leave' == message.content:
+    if message.content == '/leave' :
         #leave(message)
         if message.guild.voice_client is None:
             await message.channel.send("接続していません。")
             return
         await message.guild.voice_client.disconnect()
 
-    if message.content == "/play":
-        if not discord.opus.is_loaded():
-            await message.channel.send("libopusをロードします")
-            #もし未ロードだったら
-            discord.opus.load_opus("heroku-buildpack-libopus")
-        await message.channel.send("準備完了")
+    if message.content == "/greeting":
         if message.guild.voice_client is None:
             await message.channel.send("接続していません。")
             return
-        message.guild.voice_client.play(discord.FFmpegPCMAudio("greeting.mp3"))
+        message.guild.voice_client.play(discord.FFmpegPCMAudio(executable = './bin/ffmpeg.exe', source ='./bgm/greeting.mp3'))
 
 
 
