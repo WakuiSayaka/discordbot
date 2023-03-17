@@ -20,8 +20,11 @@ import discord
 TOKEN = os.environ['DISCORDBOT_TOKEN_ID']
 
 
+# Intentsオブジェクトを生成
+# 全てのIntentをTrue
+intents = discord.Intents.all()
 # 接続に必要なオブジェクトを生成
-client = discord.Client()
+client = discord.Client(intents=intents)
 
 # 反応するチャンネルのID
 CHANNEL_ID_BOTROOM    = 872481513504124970
@@ -210,14 +213,6 @@ async def on_message(message):
             await message.channel.send("接続していません。")
             return
         await message.guild.voice_client.disconnect()
-
-    # 音声の再生はherokuでうまく出来なかった
-    # if message.content == "/play":
-    #     if message.guild.voice_client is None:
-    #         await message.channel.send("接続していません。")
-    #         return
-    #     message.guild.voice_client.play(discord.FFmpegPCMAudio(executable = './bin/ffmpeg.exe', source ='./bgm/greeting.mp3'))
-
 
 
 # Botの起動とDiscordサーバーへの接続
